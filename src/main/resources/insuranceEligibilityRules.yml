@@ -1,0 +1,18 @@
+---
+name: "Less than 1500"
+description: "this is the rule for insurance amount less than 1500"
+condition: "loanRequest.getAmount() < 1500"
+actions:
+  - "insuranceEligibilityResponse.setShouldMedicalQuestionsBeAnswered(false)"
+---
+name: "more than 1500 but less than 3000"
+description: "this is the rule for insurance amount more than 1500 but less than 3000"
+condition: "loanRequest.getAmount() > 1500 && loanRequest.getAmount() < 3000"
+actions:
+  - "insuranceEligibilityResponse.setShouldMedicalQuestionsBeAnswered(true)"
+---    
+name: "more than 3000"
+description: "this is the rule for insurance amount more than 3000"
+condition: "loanRequest.getAmount() > 3000"
+actions:
+  - "insuranceEligibilityResponse.setShouldMedicalQuestionsBeAnswered(true)"

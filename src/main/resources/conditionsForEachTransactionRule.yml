@@ -1,0 +1,12 @@
+---
+name: "Max withdrawal to be checked from wallet"
+description: "this rule will be fired when the transaction is debit from wallet"
+condition: "transactionInterceptor.hasRuleWithNoConditionSet(\"MAX_WITHDRAWAL_WALLET_RULE\")"
+actions: 
+  - "transactionInterceptor.updateConditionForRule(\"MAX_WITHDRAWAL_WALLET_RULE\",  \"transactionRequest.getAmount() <= 1500\" , null)"
+---
+name: "Max number of withdrawals from wallet in one day"
+description: "this rule will be fired when the transaction is debit from wallet to check if number of withdrawal transactions in last one day is less than x"
+condition: "transactionInterceptor.hasRuleWithNoConditionSet(\"MAX_WITHDRAWAL_COUNT_WALLET_RULE\")"
+actions: 
+  - "transactionInterceptor.updateConditionForRule(\"MAX_WITHDRAWAL_COUNT_WALLET_RULE\",  \"SELECT COUNT(*) FROM TransactionHistory WHERE TransactionHistory.ClientId = :ClientId AND TransactionHistory.CreatedOn < :pastDate \" , com.google.common.collect.ImmutableMap.of(\"ClientId\", transactionRequest.getClientId(), \"pastDate\", java.time.LocalDate.now().minusDays(1)) )" 

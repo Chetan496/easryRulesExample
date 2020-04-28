@@ -1,0 +1,19 @@
+---
+name: "wallet to Mambu savings transaction"
+description: "this rule will be fired when the transaction is debit from wallet and credit to Mambu savings"
+condition: "(transactionRequest.getSrcSystem().equals(\"wallet\")) && (transactionRequest.getDestSystem().equals(\"MambuSavings\"))"
+actions: 
+  - "transactionInterceptor.addRule(\"IN_MEMORY\", \"MAX_WITHDRAWAL_WALLET_RULE\")"
+  - "transactionInterceptor.addRule(\"IN_MEMORY\", \"MAX_TRANSFER_WALLET_TO_MAMBU\")"
+  - "transactionInterceptor.addRule(\"DB\", \"MAX_WITHDRAWAL_COUNT_WALLET_RULE\")"
+---
+name: "Mambu savings transaction to wallet"
+description: "this rule will be fired when the transaction is debit from Mambu savings and credit to wallet"
+condition: "transactionRequest.getSrcSystem().equals(\"MambuSavings\") && transactionRequest.getDestSystem().equals(\"wallet\")"
+actions: 
+  - "transactionInterceptor.addRule(\"IN_MEMORY\", \"MAX_WITHDRAWAL_SAVINGS_RULE\")"
+  - "transactionInterceptor.addRule(\"IN_MEMORY\", \"MAX_TRANSFER_MAMBU_TO_WALLET\")"
+
+
+
+    
